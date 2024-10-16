@@ -34,7 +34,7 @@
 #include <QUndoView>
 #include <QUuid>
 
-//网络相关头文件
+// 网络相关头文件
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>
@@ -990,7 +990,19 @@ class MainWindow : public QMainWindow {
 
   void dataClassChange_uefi_drivers();
 
+  void on_btnUEFIUnload_Add_clicked();
+
+  void on_btnUEFIUnload_Del_clicked();
+
+  void on_table_uefi_Unload_currentCellChanged(int currentRow,
+                                               int currentColumn,
+                                               int previousRow,
+                                               int previousColumn);
+
+  void on_table_uefi_Unload_cellDoubleClicked(int row, int column);
+
  private:
+  bool isUnload = false;
   bool isDrag;
   QPoint m_position;
   bool LoadRightTable = false;

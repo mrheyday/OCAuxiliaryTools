@@ -278,3 +278,5 @@ paket-files/
 __pycache__/
 *.pyc
 src/syncocdialog.ui.autosave
+build/
+src/mainwindow.ui.autosave

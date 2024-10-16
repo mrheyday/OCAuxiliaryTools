@@ -48,6 +48,9 @@ dlgPreference::dlgPreference(QWidget *parent)
       Reg.value("Web", "https://github.com/").toString());
   ui->rbtnAPI->setChecked(Reg.value("rbtnAPI").toBool());
   ui->rbtnWeb->setChecked(Reg.value("rbtnWeb").toBool());
+  ui->rbtnToken->setChecked(Reg.value("rbtnToken").toBool());
+  ui->editToken->setText(Reg.value("editToken").toString());
+
   ui->chkBoxLastFile->setChecked(Reg.value("LastFile").toBool());
 
   ui->chkShowVolName->setChecked(Reg.value("ShowVolName", 0).toBool());
@@ -80,6 +83,11 @@ void dlgPreference::closeEvent(QCloseEvent *event) {
   Reg.setValue("Port", ui->txtPort->text().trimmed());
   Reg.setValue("HoverTips", ui->chkHoverTips->isChecked());
   Reg.setValue("TabIndent", ui->chkTabIndent->isChecked());
+
+  Reg.setValue("rbtnAPI", ui->rbtnAPI->isChecked());
+  Reg.setValue("rbtnWeb", ui->rbtnWeb->isChecked());
+  Reg.setValue("rbtnToken", ui->rbtnToken->isChecked());
+  Reg.setValue("editToken", ui->editToken->text());
 }
 
 void dlgPreference::keyPressEvent(QKeyEvent *event) {
@@ -125,6 +133,8 @@ void dlgPreference::saveKextUrl() {
 
 void dlgPreference::refreshKextUrl(bool writeTable) {
   isRefresh = true;
+  // strAppExePath app exe path
+  // mw_one->strConfigPath .config path
   QString file = strAppExePath + "/Database/preset/KextUrl.txt";
   ui->textEdit->clear();
   ui->textEdit->setPlainText(mymethod->loadText(file));
@@ -211,9 +221,13 @@ void dlgPreference::on_rbtnAPI_clicked() {
   QSettings Reg(strIniFile, QSettings::IniFormat);
   Reg.setValue("rbtnAPI", ui->rbtnAPI->isChecked());
   Reg.setValue("rbtnWeb", ui->rbtnWeb->isChecked());
+  Reg.setValue("rbtnToken", ui->rbtnToken->isChecked());
+  Reg.setValue("editToken", ui->editToken->text());
 }
 
 void dlgPreference::on_rbtnWeb_clicked() { on_rbtnAPI_clicked(); }
+
+void dlgPreference::on_rbtnToken_clicked() { on_rbtnAPI_clicked(); }
 
 void dlgPreference::on_btnTest_clicked() {
   mw_one->on_actionOnline_Download_Updates_triggered();
@@ -375,4 +389,11 @@ void dlgPreference::on_tableKextUrl_itemChanged(QTableWidgetItem *item) {
 void dlgPreference::on_myeditFind_returnPressed() {
   find(ui->myeditFind->text().trimmed());
   ui->myeditFind->selectAll();
+}
+
+void dlgPreference::on_btnTokenHelp_clicked() {
+  QUrl url_en(QString(
+      "https://www.howtogeek.com/devops/"
+      "how-to-set-up-https-personal-access-tokens-for-github-authentication/"));
+  QDesktopServices::openUrl(url_en);
 }
